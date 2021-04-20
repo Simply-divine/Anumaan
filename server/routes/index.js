@@ -1,11 +1,10 @@
 const express = require('express');
 
-const emojis = require('./emojis');
 const users = require('./users');
+const usersAuth = require('./users.auth');
 
 const passportJWT = require('../middlewares/auth');
 const router = express.Router();
-const { signup, login } = require('./users/auth');
 
 router.get('/', (req, res) => {
   res.json({
@@ -13,12 +12,10 @@ router.get('/', (req, res) => {
   });
 });
 
-// public routes
-router.use('/emojis', emojis);
-router.use('/signup', signup);
-router.use('/login', login);
+// user auth routes
+router.use('/users/auth', usersAuth);
 
-// private route
+// user routes
 router.use('/users', passportJWT, users);
 
 module.exports = router;

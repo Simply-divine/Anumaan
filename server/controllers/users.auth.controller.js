@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const User = require('../../models/User');
+const User = require('../models/User');
 
+/**
+ * @desc    signup user
+ * @route   post /api/users/auth/signup
+ * @access  public
+ */
 const signup = async (req, res) => {
   const { body } = req;
 
@@ -31,6 +36,11 @@ const signup = async (req, res) => {
   }
 };
 
+/**
+ * @desc    login user
+ * @route   post /api/users/auth/login
+ * @access  public
+ */
 const login = async (req, res) => {
   const findUser = await User.findOne({ email: req.body.email });
 
@@ -56,4 +66,13 @@ const login = async (req, res) => {
     });
 };
 
-module.exports = { signup, login };
+/**
+ * @desc    To check authentication status
+ * @route   GET /api/users/auth/check-auth
+ * @access  private
+ */
+const checkAuth = (req, res) => {
+  res.status(StatusCodes.OK).json({ data: req.user });
+};
+
+module.exports = { signup, login, checkAuth };

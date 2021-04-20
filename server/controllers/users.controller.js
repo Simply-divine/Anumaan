@@ -1,6 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
 const User = require('../models/User');
 
+/**
+ *
+ * @desc To get current user
+ * @route GET /api/users/me
+ * @access private
+ */
 const getCurrentUser = async (req, res) => {
   try {
     const { id } = req.user;
