@@ -67,6 +67,19 @@ const login = async (req, res) => {
 };
 
 /**
+ * @desc    logout user
+ * @route   post /api/users/auth/logout
+ * @access  private
+ */
+const logout = async (req, res) => {
+  req.logOut();
+  res
+    .status(StatusCodes.OK)
+    .clearCookie('jwt')
+    .json({ data: 'logged out successfully!' });
+};
+
+/**
  * @desc    To check authentication status
  * @route   GET /api/users/auth/check-auth
  * @access  private
@@ -75,4 +88,4 @@ const checkAuth = (req, res) => {
   res.status(StatusCodes.OK).json({ data: req.user });
 };
 
-module.exports = { signup, login, checkAuth };
+module.exports = { signup, login, checkAuth, logout };
