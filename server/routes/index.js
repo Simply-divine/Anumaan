@@ -3,7 +3,7 @@ const express = require('express');
 const users = require('./users');
 const usersAuth = require('./users.auth');
 
-const passportJWT = require('../middlewares/auth');
+const passportJWT = require('../middlewares/auth/passportJWT');
 const router = express.Router();
 
 router.get('/', (req, res) => {
