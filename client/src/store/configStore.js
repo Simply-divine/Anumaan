@@ -28,3 +28,7 @@ export const store = createStore(
   initialState,
   composeEnhancers(applyMiddleware(...middlewares))
 );
+
+// store.subscribe(() => saveToLocalStorage(store.getState()));
+
+export default store;

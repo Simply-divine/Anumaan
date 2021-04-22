@@ -2,13 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = ({ ...props }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+const RestrictedRoute = ({ ...props }) => {
   const checkingAuthStatus = useSelector(
     (state) => state.loading['auth/CHECK_AUTH']
   );
-
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
   return checkingAuthStatus ? (
     <></>
   ) : isAuthenticated ? (
@@ -20,4 +19,4 @@ const PrivateRoute = ({ ...props }) => {
   );
 };
 
-export default PrivateRoute;
+export default RestrictedRoute;

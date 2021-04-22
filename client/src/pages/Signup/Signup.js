@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,15 +15,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { checkAuth, loginUser } from '../../store/ducks';
-import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { signupUser } from '../../store/ducks';
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color='inherit' to='/'>
+      <Link color='inherit' href='/'>
         Anumaan
       </Link>{' '}
       {new Date().getFullYear()}
@@ -34,6 +33,7 @@ function Copyright() {
 
 const schema = yup.object().shape({
   email: yup.string().required(),
+  name: yup.string().required(),
   password: yup.string().required(),
 });
 
@@ -57,27 +57,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Signup() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm({
-    mode: 'onChange',
     resolver: yupResolver(schema),
   });
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const isLoading = useSelector((state) => state.loading['auth/LOGIN']);
 
   const onSubmit = (data) => {
-    dispatch(loginUser(data))
-      .then(() => {
-        history.push('/');
-        toast.success('Login successfull');
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error('Login Failed');
-      });
+    console.log(data);
+    dispatch(signupUser(data)).then(() => {
+      console.log('Sign up successful');
+    });
   };
 
   return (
@@ -88,9 +81,21 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign in
+          Sign Up!
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            id='name'
+            label='Full Name'
+            name='name'
+            autoComplete='name'
+            autoFocus
+            {...register('name')}
+          />
           <TextField
             variant='outlined'
             margin='normal'
@@ -99,6 +104,7 @@ export default function Login() {
             id='email'
             label='Email Address'
             name='email'
+            autoComplete='email'
             autoFocus
             {...register('email')}
           />
@@ -111,6 +117,7 @@ export default function Login() {
             label='Password'
             type='password'
             id='password'
+            autoComplete='current-password'
             {...register('password')}
           />
           <Button
@@ -121,12 +128,12 @@ export default function Login() {
             color='primary'
             className={classes.submit}
           >
-            Sign In
+            Sign Up!
           </Button>
           <Grid container>
             <Grid item>
-              <Link to='/signup' variant='body2'>
-                {"Don't have an account? Sign Up"}
+              <Link to='/' variant='body2'>
+                {'Already have an account? Sign In'}
               </Link>
             </Grid>
           </Grid>

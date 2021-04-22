@@ -1,10 +1,11 @@
 import http from '../../utils/httpInstance';
+import { API } from '../helpers';
 
 export const ApiMiddleware = ({ getState, dispatch }) => (next) => async (
   action
 ) => {
   const noop = () => {};
-  if (action.type !== 'API') return next(action);
+  if (action.type !== API) return next(action);
   const {
     payload: { method, url, formData },
     onRequest = noop,
@@ -18,8 +19,6 @@ export const ApiMiddleware = ({ getState, dispatch }) => (next) => async (
   }
 
   try {
-    console.log('Hello Brother!!');
-    console.log(method, url, formData);
     let { data } = await http({
       method,
       url,
@@ -27,20 +26,19 @@ export const ApiMiddleware = ({ getState, dispatch }) => (next) => async (
     });
 
     data = data.data;
-
     if (typeof onSuccess === 'function') {
-      onSuccess(dispatch);
+      onSuccess(dispatch, data);
     } else {
       dispatch({ type: onSuccess, payload: data });
     }
     return Promise.resolve(data);
   } catch (err) {
     if (typeof onFailure === 'function') {
-      onFailure(dispatch);
+      onFailure(dispatch, err);
     } else {
       dispatch({ type: onFailure, payload: err || 'Something went wrong' });
     }
-    return Promise.reject('Something went wrong');
+    return Promise.reject(err || 'Something went wrong');
   }
 };
 

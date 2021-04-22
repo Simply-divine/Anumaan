@@ -13,17 +13,19 @@ const DEFAULT_STATE = {
 };
 
 // Reducer - default export
-export default function reducer(state = DEFAULT_STATE, action) {
+const reducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    // case CHECK_AUTH.SUCCESS:
+    case CHECK_AUTH.SUCCESS:
+      return { ...state, user: action.payload, isAuthenticated: true };
     case SIGNUP.SUCCESS:
+      return { ...state, user: action.payload, isAuthenticated: true };
     case LOGIN.SUCCESS:
       return { ...state, user: action.payload, isAuthenticated: true };
     default:
       return state;
   }
-}
-
+};
+export default reducer;
 // Action Creators - export
 
 // Side-effects - exportimport { } from '../helpers'
@@ -31,7 +33,7 @@ export const signupUser = (formData) => ({
   type: API,
   payload: {
     method: 'POST',
-    url: '/signup',
+    url: '/users/auth/signup',
     formData,
   },
   onRequest: SIGNUP.REQUEST,
@@ -41,7 +43,6 @@ export const signupUser = (formData) => ({
   },
   onFailure: (dispatch, err) => {
     dispatch({ type: SIGNUP.FAILURE, payload: err });
-    dispatch({ type: SIGNUP.FAILURE, payload: err });
     dispatch({ type: CLEAR_ALL_ERRORS });
   },
 });
@@ -50,16 +51,16 @@ export const loginUser = (formData) => ({
   type: API,
   payload: {
     method: 'POST',
-    url: '/login',
+    url: '/users/auth/login',
     formData,
   },
   onRequest: LOGIN.REQUEST,
   onSuccess: (dispatch, data) => {
-    dispatch({ type: CLEAR_ALL_ERRORS });
+    console.log(LOGIN.SUCCESS, data);
     dispatch({ type: LOGIN.SUCCESS, payload: data });
+    dispatch({ type: CLEAR_ALL_ERRORS });
   },
   onFailure: (dispatch, err) => {
-    dispatch({ type: LOGIN.FAILURE, payload: err });
     dispatch({ type: LOGIN.FAILURE, payload: err });
     dispatch({ type: CLEAR_ALL_ERRORS });
   },
@@ -69,7 +70,7 @@ export const checkAuth = () => ({
   type: API,
   payload: {
     method: 'GET',
-    url: '/auth/check-auth',
+    url: '/users/auth/check-auth',
   },
   onRequest: CHECK_AUTH.REQUEST,
   onSuccess: CHECK_AUTH.SUCCESS,

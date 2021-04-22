@@ -7,6 +7,7 @@ const PrivateRoute = ({ ...props }) => {
   const checkingAuthStatus = useSelector(
     (state) => state.loading['auth/CHECK_AUTH']
   );
+
   // https://stackoverflow.com/a/56175010/11922517
   return checkingAuthStatus ? (
     <></>
