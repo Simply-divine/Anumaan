@@ -42,12 +42,20 @@ const signup = async (req, res) => {
  * @access  public
  */
 const login = async (req, res) => {
-  const findUser = await User.findOne({ email: req.body.email });
+  const findUser = await User.findOne({
+    email: req.body.email,
+  });
 
   if (!findUser)
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ error: 'Email Does not exists!!' });
+
+  const validPassword = await findUser.isValidPassword(req.body.password);
+  if (!validPassword)
+    return res
+      .status(StatusCodes.FORBIDDEN)
+      .json({ error: 'Password is incorrect' });
 
   const token = jwt.sign(findUser.toJSON(), process.env.JWT_TOKEN_SECRET, {
     expiresIn: '2h',
