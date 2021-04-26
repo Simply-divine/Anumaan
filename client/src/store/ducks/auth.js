@@ -5,7 +5,7 @@ import { CLEAR_ALL_ERRORS } from './errors';
 export const CHECK_AUTH = ApiActionCreator('auth/CHECK_AUTH');
 export const SIGNUP = ApiActionCreator('auth/SIGNUP');
 export const LOGIN = ApiActionCreator('auth/LOGIN');
-
+export const SET_MAX_SCORE = ApiActionCreator('users/SET_MAX_SCORE');
 // Actions
 const DEFAULT_STATE = {
   isAuthenticated: false,
@@ -21,6 +21,8 @@ const reducer = (state = DEFAULT_STATE, action) => {
       return { ...state, user: action.payload, isAuthenticated: true };
     case LOGIN.SUCCESS:
       return { ...state, user: action.payload, isAuthenticated: true };
+    case SET_MAX_SCORE.SUCCESS:
+      return { ...state, user: { ...state.user, max_score: action.payload } };
     default:
       return state;
   }
@@ -56,7 +58,6 @@ export const loginUser = (formData) => ({
   },
   onRequest: LOGIN.REQUEST,
   onSuccess: (dispatch, data) => {
-    console.log(LOGIN.SUCCESS, data);
     dispatch({ type: LOGIN.SUCCESS, payload: data });
     dispatch({ type: CLEAR_ALL_ERRORS });
   },
@@ -75,4 +76,22 @@ export const checkAuth = () => ({
   onRequest: CHECK_AUTH.REQUEST,
   onSuccess: CHECK_AUTH.SUCCESS,
   onFailure: CHECK_AUTH.FAILURE,
+});
+
+export const setMaxScore = (score) => ({
+  type: API,
+  payload: {
+    method: 'POST',
+    url: '/users/score',
+    formData: { data: score },
+  },
+  onRequest: SET_MAX_SCORE.REQUEST,
+  onSuccess: (dispatch, data) => {
+    dispatch({ type: SET_MAX_SCORE.SUCCESS, payload: data });
+    dispatch({ type: CLEAR_ALL_ERRORS });
+  },
+  onFailure: (dispatch, err) => {
+    dispatch({ type: SET_MAX_SCORE.FAILURE, payload: err });
+    dispatch({ type: CLEAR_ALL_ERRORS });
+  },
 });

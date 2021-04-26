@@ -67,9 +67,8 @@ export default function Signup() {
   const isLoading = useSelector((state) => state.loading['auth/LOGIN']);
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(signupUser(data)).then(() => {
-      console.log('Sign up successful');
+      console.log('Sign up successfull');
     });
   };
 

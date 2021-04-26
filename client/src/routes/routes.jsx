@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, BrowserRouter } from 'react-router-dom';
+import GameOver from '../Components/GameOver';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Login from '../pages/Login/Login';
 import Signup from '../pages/Signup/Signup';
@@ -15,7 +16,8 @@ const MainRouter = () => (
       <RestrictedRoute path='/signup' component={Signup} />
 
       {/* Private Routes */}
-      <PrivateRoute path='/dashboard' component={Dashboard} />
+      <PrivateRoute path='/dashboard' exact component={Dashboard} />
+      <PrivateRoute path='/gameover' exact component={GameOver} />
 
       {/* Public Routes */}
       <PublicRoute component={() => <div>404, page not found!</div>} />

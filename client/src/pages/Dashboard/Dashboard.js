@@ -1,12 +1,13 @@
 import React from 'react';
-import MovieDisplay from '../../Components/MovieDisplay';
+import Game from '../../Components/Game';
+import Navbar from '../../Components/Navbar';
 import DashboardWrapper from './Dashboard.styles';
 
 const Dashboard = () => {
   return (
     <DashboardWrapper>
-      <h1>Start Playing</h1>
-      <MovieDisplay time={30}/>
+      <Navbar />
+      <Game />
     </DashboardWrapper>
   );
 };

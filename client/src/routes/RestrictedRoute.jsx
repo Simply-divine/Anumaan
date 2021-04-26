@@ -7,7 +7,6 @@ const RestrictedRoute = ({ ...props }) => {
     (state) => state.loading['auth/CHECK_AUTH']
   );
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
   return checkingAuthStatus ? (
     <></>
   ) : isAuthenticated ? (
