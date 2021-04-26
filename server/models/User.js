@@ -26,6 +26,10 @@ const UserSchema = mongoose.Schema(
       maxLength: 100,
       unique: true,
     },
+    max_score: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -43,7 +47,6 @@ UserSchema.set('toJSON', {
 
 // ALERT: arrow-functions change the scope of this. Use normal functions.
 UserSchema.pre('save', function (next) {
-  console.log('Before saving', this);
   if (this.isModified('password') || this.isNew) {
     try {
       // Hash the password
