@@ -19,6 +19,7 @@ router.use('/users/auth', usersAuth);
 // user routes
 router.use('/users', passportJWT, users);
 
+
 // movie routes
 router.use('/movies', movies);
 module.exports = router;

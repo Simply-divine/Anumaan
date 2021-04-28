@@ -49,4 +49,28 @@ const setMaxScore = async (req, res) => {
       .json({ error: `something went wrong in getting current user` });
   }
 };
-module.exports = { getCurrentUser, setMaxScore };
+
+/**
+ *
+ * @desc To get all users
+ * @route POST /api/users
+ * @access private
+ */
+const allUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    console.log(users);
+    if (!users)
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Users not found' });
+    return res.status(StatusCodes.OK).json({ data: users });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: `something went wrong in getting all users` });
+  }
+};
+
+module.exports = { getCurrentUser, setMaxScore, allUsers };

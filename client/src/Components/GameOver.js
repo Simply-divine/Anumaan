@@ -48,7 +48,7 @@ const GameOver = () => {
       // todo: add message for new high score
     }
     clearGame();
-    history.push('/dashboard');
+    history.push('/');
   };
   return (
     <GameOverWrapper>

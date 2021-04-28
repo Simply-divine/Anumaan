@@ -8,7 +8,6 @@ import MovieDisplay from './MovieDisplay';
 import Status from './Status';
 
 const GameWrapper = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

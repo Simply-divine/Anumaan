@@ -7,6 +7,8 @@ import Signup from '../pages/Signup/Signup';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import RestrictedRoute from './RestrictedRoute';
+import Leaderboard from '../Components/Leaderboard';
+import Game from '../Components/Game';
 
 const MainRouter = () => (
   <BrowserRouter>
@@ -16,8 +18,7 @@ const MainRouter = () => (
       <RestrictedRoute path='/signup' component={Signup} />
 
       {/* Private Routes */}
-      <PrivateRoute path='/dashboard' exact component={Dashboard} />
-      <PrivateRoute path='/gameover' exact component={GameOver} />
+      <PrivateRoute path='/' component={Dashboard} />
 
       {/* Public Routes */}
       <PublicRoute component={() => <div>404, page not found!</div>} />
