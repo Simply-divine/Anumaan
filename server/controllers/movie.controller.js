@@ -30,9 +30,11 @@ const getAllMovies = async (req, res) => {
 const changeMovie = async (req, res) => {
   try {
     let { data: movies } = await http.get('discover/movie');
-    const movie = await movies.results[
-      Math.floor(Math.random() * movies.results.length)
-    ];
+    const randomIndex = Math.floor(
+      Math.random() * (movies.results.length ? movies.results.length - 1 : 0)
+    );
+    console.log(randomIndex);
+    const movie = await movies.results[randomIndex];
     console.log(movie.title);
     return res.status(StatusCodes.OK).json({
       data: {

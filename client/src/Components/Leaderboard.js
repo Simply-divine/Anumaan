@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import http from '../utils/httpInstance';
 import { Container, Typography } from '@material-ui/core';
+import Loading from './Common/Loading';
 
 const useStyles = makeStyles({
   something: {
@@ -25,10 +26,12 @@ function createData(email, name, max_score) {
 export default function Leaderboard() {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const res = await http({
           method: 'GET',
           url: '/users',
@@ -42,6 +45,7 @@ export default function Leaderboard() {
         newrows.sort((user1, user2) => user1.max_score - user2.max_score);
         newrows.reverse();
         setRows(newrows);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -62,14 +66,20 @@ export default function Leaderboard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.email}>
-                <TableCell component='th' scope='row'>
-                  {row.name}
-                </TableCell>
-                <TableCell align='right'>{row.max_score}</TableCell>
-              </TableRow>
-            ))}
+            {loading ? (
+              <div style={{ margin: '20px' }}>
+                <Loading varient='primary' />
+              </div>
+            ) : (
+              rows.map((row) => (
+                <TableRow key={row.email}>
+                  <TableCell component='th' scope='row'>
+                    {row.name}
+                  </TableCell>
+                  <TableCell align='right'>{row.max_score}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

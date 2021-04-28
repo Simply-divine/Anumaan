@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import { Button, Card, CardActions, CardContent } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import {
-  setMaxScore,
-  SET_HEALTH,
-  SET_MAX_SCORE,
-  SET_SCORE,
-} from '../store/ducks';
+import { addScore, SET_HEALTH, SET_SCORE } from '../../store/ducks';
 import { toast } from 'react-toastify';
 
 const GameOverWrapper = styled.div`
@@ -35,18 +30,21 @@ const GameOver = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const max_score = useSelector((state) => state.auth.user.max_score);
+
+  useEffect(() => {
+    console.log('MAX_SCORE_', max_score);
+    console.log(score);
+    if (score > max_score) {
+      toast.success(' New High score 👏👏');
+    }
+  }, []);
+
   const onClick = (e) => {
     // handle button onclick
     const clearGame = (e) => {
       dispatch({ type: SET_SCORE, payload: 0 });
       dispatch({ type: SET_HEALTH, payload: 10 });
     };
-    console.log('MAX_SCORE_', max_score);
-    if (score > max_score) {
-      dispatch(setMaxScore(score));
-      toast.success(' New High score 👏👏');
-      // todo: add message for new high score
-    }
     clearGame();
     history.push('/');
   };

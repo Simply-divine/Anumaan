@@ -1,19 +1,19 @@
-import { CssBaseline, Grid } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { CssBaseline } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import MovieDisplay from '../../Components/MovieDisplay';
+import Status from '../../Components/Status';
+import AnswerField from '../../Components/AnswerField';
 import {
-  changePlay,
+  addScore,
   DECREMENT_HEALTH,
   SET_HEALTH,
   SET_SCORE,
-  UPDATE_TIME,
-} from '../store/ducks/game';
-import AnswerField from './AnswerField';
-import MovieDisplay from './MovieDisplay';
-import Status from './Status';
+} from '../../store/ducks';
+import Loading from '../../Components/Common/Loading';
+import Flex from '../../Components/Common/Flex';
 
 const GameWrapper = styled.div`
   display: flex;
@@ -25,7 +25,9 @@ const GameWrapper = styled.div`
 const Game = () => {
   const dispatch = useDispatch();
   const health = useSelector((state) => state.game.health);
+  const score = useSelector((state) => state.game.score);
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const clearGame = (e) => {
@@ -36,7 +38,20 @@ const Game = () => {
   }, []);
 
   if (health === 0) {
-    history.push('/gameover');
+    dispatch({ type: DECREMENT_HEALTH });
+    setLoading(true);
+    dispatch(addScore(score)).then((res) => {
+      history.push('/gameover');
+    });
+    setLoading(true);
+  }
+
+  if (loading) {
+    return (
+      <Flex align='center' justify='center' direction='column'>
+        <Loading varient='primary' />
+      </Flex>
+    );
   }
 
   return (

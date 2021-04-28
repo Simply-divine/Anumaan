@@ -1,13 +1,13 @@
 const express = require('express');
 const {
   getCurrentUser,
-  setMaxScore,
   allUsers,
+  addScore,
 } = require('../controllers/users.controller');
 const router = express.Router();
 
 router.get('/', allUsers);
-router.get('/me', getCurrentUser);
-router.post('/score', setMaxScore);
+router.get('/user', getCurrentUser);
+router.post('/user/scores', addScore);
 
 module.exports = router;

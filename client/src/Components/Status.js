@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Loading from './Common/Loading';
 
 const StatusWrapper = styled.div`
   div {
@@ -52,7 +53,9 @@ const Status = () => {
           <Typography variant='h6'>Score: {score}</Typography>
         </div>
         <div>
-          <Typography variant='h6'>Health: {health}</Typography>
+          <Typography variant='h6'>
+            Health: {health >= 0 ? health : <Loading variant='secondary' />}
+          </Typography>
           <BorderLinearProgress variant='determinate' value={50} />
         </div>
       </div>

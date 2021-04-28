@@ -26,11 +26,11 @@ const getCurrentUser = async (req, res) => {
 
 /**
  *
- * @desc To get current user
- * @route POST /api/users/score
+ * @desc To add scores
+ * @route POST /api/users/user/scores
  * @access private
  */
-const setMaxScore = async (req, res) => {
+const addScore = async (req, res) => {
   try {
     const { id } = req.user;
     const user = await User.findById(id).select('-password');
@@ -39,9 +39,18 @@ const setMaxScore = async (req, res) => {
         .status(StatusCodes.NOT_FOUND)
         .json({ error: 'User not found' });
     console.log('Max score', req.body.data);
-    user.max_score = req.body.data;
+    const score = req.body.data;
+    if (user.max_score < score) {
+      user.max_score = score;
+    }
+    user.scores.push(score);
     await user.save();
-    return res.status(StatusCodes.OK).json({ data: user.max_score });
+    return res.status(StatusCodes.OK).json({
+      data: {
+        max_score: user.max_score,
+        score,
+      },
+    });
   } catch (err) {
     console.log(err);
     return res
@@ -73,4 +82,4 @@ const allUsers = async (req, res) => {
   }
 };
 
-module.exports = { getCurrentUser, setMaxScore, allUsers };
+module.exports = { getCurrentUser, addScore, allUsers };

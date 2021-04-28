@@ -4,12 +4,21 @@ import styled from 'styled-components';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { changePlay, DECREMENT_HEALTH, UPDATE_TIME } from '../store/ducks/game';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router';
+import Loading from './Common/Loading';
 
 const ImageWrapper = styled.div`
   img {
     border-radius: 50%;
   }
+`;
+
+const LoadingWrapper = styled.div`
+  height: '100%';
+  width: '100%';
+  display: 'flex';
+  flex-direction: 'column';
+  align-items: 'center';
+  justify-content: 'center';
 `;
 
 const MovieDisplay = () => {
@@ -21,8 +30,10 @@ const MovieDisplay = () => {
   useEffect(() => {
     let lastUpdateTime = Date.now();
     let interval;
+    setLoading(true);
     dispatch(changePlay())
       .then(() => {
+        setLoading(false);
         interval = setInterval(() => {
           const now = Date.now();
           const deltaTime = now - lastUpdateTime;
@@ -38,7 +49,11 @@ const MovieDisplay = () => {
   }, []);
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <LoadingWrapper>
+        <Loading varient='primary' />
+      </LoadingWrapper>
+    );
   }
 
   if (timer >= 30000) {
