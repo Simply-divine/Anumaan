@@ -16,9 +16,7 @@ const MovieDisplay = () => {
   const [loading, setLoading] = useState(false);
   const image = useSelector((state) => state.game.movie.path);
   const timer = useSelector((state) => state.game.movie.timer);
-  const health = useSelector((state) => state.game.health);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     let lastUpdateTime = Date.now();
@@ -41,10 +39,6 @@ const MovieDisplay = () => {
 
   if (loading) {
     return <CircularProgress />;
-  }
-
-  if (health === 0) {
-    history.push('/gameover');
   }
 
   if (timer >= 30000) {
