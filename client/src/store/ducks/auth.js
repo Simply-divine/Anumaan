@@ -5,6 +5,7 @@ import { CLEAR_ALL_ERRORS } from './errors';
 export const CHECK_AUTH = ApiActionCreator('auth/CHECK_AUTH');
 export const SIGNUP = ApiActionCreator('auth/SIGNUP');
 export const LOGIN = ApiActionCreator('auth/LOGIN');
+export const LOGOUT = ApiActionCreator('auth/LOGOUT');
 export const ADD_SCORE = ApiActionCreator('auth/ADD_SCORE');
 // Actions
 const DEFAULT_STATE = {
@@ -21,6 +22,8 @@ const reducer = (state = DEFAULT_STATE, action) => {
       return { ...state, user: action.payload, isAuthenticated: true };
     case LOGIN.SUCCESS:
       return { ...state, user: action.payload, isAuthenticated: true };
+    case LOGOUT.SUCCESS:
+      return { ...state, user: {}, isAuthenticated: false };
     case ADD_SCORE.SUCCESS:
       return {
         ...state,
@@ -70,6 +73,24 @@ export const loginUser = (formData) => ({
   },
   onFailure: (dispatch, err) => {
     dispatch({ type: LOGIN.FAILURE, payload: err });
+    dispatch({ type: CLEAR_ALL_ERRORS });
+  },
+});
+
+export const logoutUser = (formData) => ({
+  type: API,
+  payload: {
+    method: 'GET',
+    url: '/users/auth/logout',
+    formData,
+  },
+  onRequest: LOGOUT.REQUEST,
+  onSuccess: (dispatch, data) => {
+    dispatch({ type: LOGOUT.SUCCESS, payload: data });
+    dispatch({ type: CLEAR_ALL_ERRORS });
+  },
+  onFailure: (dispatch, err) => {
+    dispatch({ type: LOGOUT.FAILURE, payload: err });
     dispatch({ type: CLEAR_ALL_ERRORS });
   },
 });

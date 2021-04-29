@@ -15,15 +15,30 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { MainListItems, SecondaryListItems } from '../../Components/ListItems';
 import DashboardRoutes from '../../routes/Dashboard.routes';
 import useStyles from './Dashboard.styles';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../store/ducks';
+import { toast } from 'react-toastify';
 
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser());
+      toast.success(`Logged out successfully... ✋`);
+    } catch (err) {
+      console.log(err);
+      toast.error(`Couldn't logout successfully...😔`);
+    }
   };
 
   return (
@@ -53,12 +68,10 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            Anumaan
           </Typography>
-          <IconButton color='inherit'>
-            <Badge badgeContent={4} color='secondary'>
-              <NotificationsIcon />
-            </Badge>
+          <IconButton color='inherit' onClick={handleLogout}>
+            <p>Logout</p>
           </IconButton>
         </Toolbar>
       </AppBar>

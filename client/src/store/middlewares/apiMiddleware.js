@@ -19,6 +19,7 @@ export const ApiMiddleware = ({ getState, dispatch }) => (next) => async (
   }
 
   try {
+    console.log('URL', url);
     let { data } = await http({
       method,
       url,
@@ -26,10 +27,7 @@ export const ApiMiddleware = ({ getState, dispatch }) => (next) => async (
     });
 
     data = data.data;
-    console.log('FROM API', data);
-    console.log('URL', url);
     if (typeof onSuccess === 'function') {
-      console.log('on success is function');
       onSuccess(dispatch, data);
     } else {
       dispatch({ type: onSuccess, payload: data });

@@ -76,7 +76,7 @@ const login = async (req, res) => {
 
 /**
  * @desc    logout user
- * @route   post /api/users/auth/logout
+ * @route   get /api/users/auth/logout
  * @access  private
  */
 const logout = async (req, res) => {
