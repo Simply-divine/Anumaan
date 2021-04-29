@@ -1,4 +1,3 @@
-import { DefaultTheme } from 'styled-components';
 import { colorVariants } from './colorVariants';
 const colors = {
   primary: '#586FFA',

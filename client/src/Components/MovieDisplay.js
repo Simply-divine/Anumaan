@@ -1,7 +1,6 @@
-import { CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changePlay, DECREMENT_HEALTH, UPDATE_TIME } from '../store/ducks/game';
 import { toast } from 'react-toastify';
 import Loading from './Common/Loading';

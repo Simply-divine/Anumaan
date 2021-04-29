@@ -1,7 +1,6 @@
 import { Container, TextField } from '@material-ui/core';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   changePlay,
@@ -11,8 +10,7 @@ import {
 import { toast } from 'react-toastify';
 
 const AnswerField = () => {
-  const { register, handleSubmit, errors } = useForm();
-  const history = useHistory();
+  const { register, handleSubmit} = useForm();
   const dispatch = useDispatch();
   const movieName = useSelector((state) => state.game.movie?.name);
   const onSubmit = (data, e) => {

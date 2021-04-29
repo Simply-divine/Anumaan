@@ -1,4 +1,4 @@
-import { Provider as StoreProvider, useDispatch } from 'react-redux';
+import { Provider as StoreProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import MainRouter from './routes/routes';
 import { history, store } from './store';

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { Button, Card, CardActions, CardContent } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { addScore, SET_HEALTH, SET_SCORE } from '../../store/ducks';
+import { SET_HEALTH, SET_SCORE } from '../../store/ducks';
 import { toast } from 'react-toastify';
 
 const GameOverWrapper = styled.div`
