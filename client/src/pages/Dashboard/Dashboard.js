@@ -90,9 +90,9 @@ export default function Dashboard() {
           <MainListItems />
         </List>
         <Divider />
-        {/* <List>
+        <List>
           <SecondaryListItems />
-        </List> */}
+        </List>
       </Drawer>
 
       <main className={classes.content}>

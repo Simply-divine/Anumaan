@@ -5,6 +5,7 @@ import About from '../pages/About/About';
 import Game from '../pages/Game/Game';
 import GameOver from '../pages/Game/GameOver';
 import Profile from '../pages/Profile/Profile';
+import Story from '../pages/Story/Story';
 import PrivateRoute from './PrivateRoute';
 
 const DashboardRoutes = () => {
@@ -16,6 +17,7 @@ const DashboardRoutes = () => {
       <PrivateRoute exact path='/game' component={Game} />
       <PrivateRoute exact path='/leaderboard' component={Leaderboard} />
       <PrivateRoute exact path='/about' component={About} />
+      <PrivateRoute exact path='/story' component={Story} />
       <PrivateRoute path='/gameover' exact component={GameOver} />
       <PrivateRoute path='/profile' exact component={Profile} />
     </Switch>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -11,6 +11,9 @@ import { useHistory } from 'react-router';
 
 export const MainListItems = () => {
   const history = useHistory();
+  useEffect(() => {
+    history.push('/about');
+  }, []);
 
   return (
     <div>
@@ -58,24 +61,13 @@ export const SecondaryListItems = () => {
       <ListItem
         button
         onClick={() => {
-          history.push('/about');
+          history.push('/story');
         }}
       >
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary='About' />
-      </ListItem>
-      <ListItem
-        button
-        onClick={() => {
-          history.push('/controls');
-        }}
-      >
-        <ListItemIcon>
-          <SettingsIcon />
-        </ListItemIcon>
-        <ListItemText primary='Controls' />
+        <ListItemText primary='About Us' />
       </ListItem>
     </div>
   );
